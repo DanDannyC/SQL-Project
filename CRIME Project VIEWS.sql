@@ -1,0 +1,36 @@
+DROP VIEW IF EXISTS rep_loc_off_v;
+CREATE VIEW rep_loc_off_v AS
+SELECT
+rep.REPORT_NO,
+rep.INCIDENT_TIME,
+rep.COMPLAINT_TYPE,
+rep.CCTV_FLAG,
+rep.CRIME_TYPE,
+rep.CRIME_CODE,
+rep.WEEK_NUMBER,
+rep.CASE_STATUS_DESC,
+rep.CASE_STATUS_CODE,
+loc.AREA_CODE,
+loc.AREA_NAME,
+loc.CCTV_COUNT,
+loc.POPULATION_DENSITY,
+off.OFFICER_CODE,
+off.PRECINCT_CODE
+    FROM report_t rep
+    INNER JOIN location_t loc
+    ON rep.AREA_CODE = loc.AREA_CODE
+    JOIN officer_t off 
+    ON off.OFFICER_CODE = rep.OFFICER_CODE;
+    
+    DROP VIEW IF EXISTS rep_vic_v;
+    CREATE VIEW rep_vic_v AS
+SELECT
+rep.REPORT_NO,
+rep.OFFENDER_RELATION,
+rep.CRIME_TYPE,
+rep.INCIDENT_TIME,
+vic.VICTIM_CODE,
+vic.VICTIM_AGE
+FROM report_t rep
+INNER JOIN victim_t vic
+ON rep.VICTIM_CODE = vic.VICTIM_CODE;
